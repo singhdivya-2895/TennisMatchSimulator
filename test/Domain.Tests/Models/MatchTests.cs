@@ -93,6 +93,63 @@ namespace Domain.Tests.Models
             winner.Should().Be(_winningPlayer1);
         }
 
+        [Fact]
+        public void TieBreakerTest_ShouldSimulateTieBreaker()
+        {
+            var _player1 = new Player("Player 1");
+            var _player2 = new Player("Player 2");
+            var match = new Match(_player1, _player2);
+
+            // Simulate reaching a tie-breaker (6-6 in games)
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    match.PointWonBy(0);
+                }
+                for (int j = 0; j < 4; j++)
+                {
+                    match.PointWonBy(1);
+                }
+
+            }
+
+            var setScore = match.GetCurrentSetScore();
+            setScore.Should().Be("10-10");
+
+            var matchScore = match.GetCurrentMatchScore();
+            matchScore.Should().Be("0-0");
+        }
+
+
+        [Fact]
+        public void AdvantageTests_ShouldSimulateAdvantage()
+        {
+            var _player1 = new Player("Player 1");
+            var _player2 = new Player("Player 2");
+            var match = new Match(_player1, _player2);
+
+            for (int j = 0; j < 4; j++)
+            {
+                match.PointWonBy(0);
+                match.PointWonBy(1);
+            }
+            match.GetCurrentGameScore().Should().Be("Deuce");
+            match.PointWonBy(0);
+            match.GetCurrentGameScore().Should().Be("Advantage Player 1");
+
+            match.PointWonBy(1);
+            match.GetCurrentGameScore().Should().Be("Deuce");
+
+            match.PointWonBy(1);
+            match.GetCurrentGameScore().Should().Be("Advantage Player 2");
+
+            match.PointWonBy(1);
+            match.GetCurrentGameScore().Should().Be("0-0");
+            match.GetCurrentSetScore().Should().Be("0-1");
+
+        }
+
         private void SimulateSetWin(Match match, Player winner)
         {
             for (int i = 0; i < 3; i++)
