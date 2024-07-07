@@ -23,7 +23,7 @@ namespace TennisMatchService.Logger
 
         public void LogLineBreak()
         {
-            LogMessage("----\n");
+            LogMessage("\n");
         }
         public void LogError(string message)
         {

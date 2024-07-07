@@ -20,11 +20,12 @@ namespace TennisMatchService
                 var match = new Match(player1, player2);
                 bool isMatchOver;
                 _logger.LogNewMatchStart(player1.Name, player2.Name);
-
-                foreach (var point in points)
+                int currentPoint = -1;
+                for (int index = 0; index < points.Length; index++)
                 {
-                    isMatchOver = match.RegisterPointWon(point);
-                    _logger.LogMessage($"Point won by: {(point == 0 ? player1.Name : player2.Name)}");
+                    currentPoint = points[index];
+                    isMatchOver = match.RegisterPointWon(currentPoint);
+                    _logger.LogMessage($"Point {index}: {(currentPoint == 0 ? player1.Name : player2.Name)} wins");
                     _logger.LogMessage($"Current Game Score: {match.GetCurrentGameScore}");
                     _logger.LogMessage($"Current Set Score: {match.GetCurrentSetScore}");
                     _logger.LogMessage($"Current Match Score: {match.GetCurrentMatchScore}");
@@ -38,7 +39,8 @@ namespace TennisMatchService
                 }
                 _logger.LogMessage($"No Result");
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
                 _logger.LogError(ex.Message);
             }
         }

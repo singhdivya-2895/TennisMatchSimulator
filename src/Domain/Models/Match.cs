@@ -50,7 +50,7 @@
 
         public string GetCurrentSetScore => _currentSet.GetScore();
 
-        public string GetCurrentMatchScore => $"{Player1.SetsWon}-{Player2.SetsWon}";
+        public string GetCurrentMatchScore => $"{Player1.SetsWon} sets to {Player2.SetsWon}";
 
         public bool IsMatchOver => Player1.SetsWon == 3 || Player2.SetsWon == 3;
 
