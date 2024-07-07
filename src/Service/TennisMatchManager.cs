@@ -25,7 +25,7 @@ namespace TennisMatchService
                 {
                     currentPoint = points[index];
                     isMatchOver = match.RegisterPointWon(currentPoint);
-                    _logger.LogMessage($"Point {index}: {(currentPoint == 0 ? player1.Name : player2.Name)} wins");
+                    _logger.LogMessage($"Point {index + 1}: {(currentPoint == 0 ? player1.Name : player2.Name)} wins");
                     _logger.LogMessage($"Current Game Score: {match.GetCurrentGameScore}");
                     _logger.LogMessage($"Current Set Score: {match.GetCurrentSetScore}");
                     _logger.LogMessage($"Current Match Score: {match.GetCurrentMatchScore}");
