@@ -51,7 +51,7 @@ namespace Domain.Tests.Models
 
             match.RegisterPointWon(0);
 
-            match.GetCurrentGameScore.Should().Contain("15");
+            match.GetCurrentGameScore.Should().Be("15-0");
         }
 
         [Fact]
@@ -60,8 +60,10 @@ namespace Domain.Tests.Models
             var _player1 = new Player("Player 1");
             var _player2 = new Player("Player 2");
             var match = new Match(_player1, _player2);
+            match.RegisterPointWon(0);
+            match.RegisterPointWon(1);
 
-            match.GetCurrentGameScore.Should().Be("0-0");
+            match.GetCurrentGameScore.Should().Be("15-15");
             match.GetCurrentSetScore.Should().Be("0-0");
             match.GetCurrentMatchScore.Should().Be("0-0");
         }
