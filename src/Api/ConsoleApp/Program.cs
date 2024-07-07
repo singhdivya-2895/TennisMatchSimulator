@@ -1,17 +1,19 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 using TennisMatchService;
 using TennisMatchService.Logger;
 
 namespace ConsoleApp
 {
+    [ExcludeFromCodeCoverage]
     internal class Program
     {
         static void Main(string[] args)
         {
             #region "Dependency Injection"
             var serviceProvider = new ServiceCollection()
-                .AddSingleton<ITennisMatchService, TennisMatchService.TennisMatchService>()
+                .AddSingleton<ITennisMatchService, TennisMatchService.TennisMatchManager>()
                 .AddLogging(builder =>
                 {
                     builder.AddSimpleConsole(options =>
@@ -20,7 +22,7 @@ namespace ConsoleApp
                         options.SingleLine = true;
                     });
                 })
-                .AddTransient<MatchLogger>()
+                .AddSingleton<IMatchLogger, MatchLogger>()
                 .BuildServiceProvider();
 
             var tennisMatchService = serviceProvider.GetService<ITennisMatchService>();

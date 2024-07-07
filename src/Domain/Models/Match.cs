@@ -25,29 +25,35 @@
 
         public void StartNewGame()
         {
-            _currentGame = new Game(Player1, Player2);
+            _currentGame = new Game(Player1, Player2, _currentSet.IsTiebreakerActive);
         }
 
-        public void PointWonBy(int playerIndex)
+        public bool RegisterPointWon(int playerIndex)
         {
-            var player = playerIndex == 0 ? Player1 : Player2;
-            _currentGame.PointWonBy(player);
-
-            if (_currentGame.IsNewGame)
+            bool _isMatchOver = IsMatchOver;
+            if (!_isMatchOver)
             {
-                _currentSet.AddGame(_currentGame);
-                StartNewGame();
+                var player = playerIndex == 0 ? Player1 : Player2;
+                _currentGame.PointWonBy(player);
+
+                if (_currentGame.IsNewGame)
+                {
+                    _currentSet.AddGame(_currentGame);
+                    StartNewGame();
+                    _isMatchOver = IsMatchOver;
+                }
             }
+            return _isMatchOver;
         }
 
-        public string GetCurrentGameScore() => _currentGame.GetScore();
+        public string GetCurrentGameScore => _currentGame.GetScore();
 
-        public string GetCurrentSetScore() => _currentSet.GetScore();
+        public string GetCurrentSetScore => _currentSet.GetScore();
 
-        public string GetCurrentMatchScore() => $"{Player1.SetsWon}-{Player2.SetsWon}";
+        public string GetCurrentMatchScore => $"{Player1.SetsWon}-{Player2.SetsWon}";
 
-        public bool IsMatchOver() => Player1.SetsWon == 3 || Player2.SetsWon == 3;
+        public bool IsMatchOver => Player1.SetsWon == 3 || Player2.SetsWon == 3;
 
-        public (Player, bool) GetMatchWinner() => (Player1.SetsWon > Player2.SetsWon ? Player1 : Player2, IsMatchOver());
+        public Player GetMatchWinner => Player1.SetsWon > Player2.SetsWon ? Player1 : Player2;
     }
 }

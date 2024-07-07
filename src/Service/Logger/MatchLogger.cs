@@ -1,14 +1,15 @@
-﻿namespace TennisMatchService.Logger
+﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
+namespace TennisMatchService.Logger
 {
-    using Microsoft.Extensions.Logging;
-
-    public class MatchLogger
+    [ExcludeFromCodeCoverage]
+    public class MatchLogger : IMatchLogger
     {
-        private readonly ILogger<MatchLogger> _logger;
+        private readonly ILogger _logger;
 
-        public MatchLogger(ILogger<MatchLogger> logger)
+        public MatchLogger(ILoggerFactory loggerFactory)
         {
-            _logger = logger;
+            _logger = loggerFactory.CreateLogger("TennisMatchLogger");
         }
         public void LogNewMatchStart(string player1, string player2)
         {

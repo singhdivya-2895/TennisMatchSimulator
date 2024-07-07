@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using RestApi.DTO;
+using System.Diagnostics.CodeAnalysis;
 using TennisMatchService;
 using TennisMatchService.Logger;
 
 namespace RestApi
 {
+    [ExcludeFromCodeCoverage]
     public class Program
     {
         public static void Main(string[] args)
@@ -21,7 +23,7 @@ namespace RestApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tennis Match Simulator", Version = "v1" });
             });
-            builder.Services.AddSingleton<ITennisMatchService, TennisMatchService.TennisMatchService>();
+            builder.Services.AddSingleton<ITennisMatchService, TennisMatchService.TennisMatchManager>();
             builder.Services.AddLogging(builder =>
             {
                 builder.AddSimpleConsole(options =>
@@ -30,7 +32,7 @@ namespace RestApi
                     options.SingleLine = true;
                 });
             });
-            builder.Services.AddSingleton<MatchLogger>();
+            builder.Services.AddSingleton<IMatchLogger, MatchLogger>();
 
             var app = builder.Build();
 
