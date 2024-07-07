@@ -65,7 +65,7 @@ namespace Domain.Tests.Models
 
             match.GetCurrentGameScore.Should().Be("15-15");
             match.GetCurrentSetScore.Should().Be("0-0");
-            match.GetCurrentMatchScore.Should().Be("0-0");
+            match.GetCurrentMatchScore.Should().Be("0 sets to 0");
         }
 
         [Fact]
@@ -88,7 +88,7 @@ namespace Domain.Tests.Models
             SimulateSetWin(match, _winningPlayer1);
 
             match.GetCurrentGameScore.Should().Be("0-0");
-            match.GetCurrentMatchScore.Should().Be("3-0");
+            match.GetCurrentMatchScore.Should().Be("3 sets to 0");
 
             match.IsMatchOver.Should().BeTrue();
             match.GetMatchWinner.Should().Be(_winningPlayer1);
@@ -104,7 +104,7 @@ namespace Domain.Tests.Models
             SimulateSetWin(match, _player2);
 
             match.GetCurrentGameScore.Should().Be("0-0");
-            match.GetCurrentMatchScore.Should().Be("0-3");
+            match.GetCurrentMatchScore.Should().Be("0 sets to 3");
 
             match.IsMatchOver.Should().BeTrue();
             match.GetMatchWinner.Should().Be(_player2);
@@ -120,7 +120,7 @@ namespace Domain.Tests.Models
             SimulateSetWin(match, _winningPlayer1);
 
             match.GetCurrentGameScore.Should().Be("0-0");
-            match.GetCurrentMatchScore.Should().Be("3-0");
+            match.GetCurrentMatchScore.Should().Be("3 sets to 0");
 
             match.IsMatchOver.Should().BeTrue();
             match.GetMatchWinner.Should().Be(_winningPlayer1);
@@ -178,7 +178,7 @@ namespace Domain.Tests.Models
 
             match.GetCurrentGameScore.Should().Be("(TieBreaker) 0-1");
             match.GetCurrentSetScore.Should().Be("6-6");
-            match.GetCurrentMatchScore.Should().Be("0-0");
+            match.GetCurrentMatchScore.Should().Be("0 sets to 0");
 
             for (int j = 0; j < 6; j++)
             {
@@ -188,14 +188,14 @@ namespace Domain.Tests.Models
 
             match.GetCurrentGameScore.Should().Be("(TieBreaker) 6-7");
             match.GetCurrentSetScore.Should().Be("6-6");
-            match.GetCurrentMatchScore.Should().Be("0-0");
+            match.GetCurrentMatchScore.Should().Be("0 sets to 0");
 
             // Break TieBreaker
             match.RegisterPointWon(1);
 
             match.GetCurrentGameScore.Should().Be("0-0");
             match.GetCurrentSetScore.Should().Be("0-0");
-            match.GetCurrentMatchScore.Should().Be("0-1");
+            match.GetCurrentMatchScore.Should().Be("0 sets to 1");
         }
 
         [Fact]
