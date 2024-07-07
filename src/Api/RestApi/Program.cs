@@ -63,7 +63,7 @@ namespace RestApi
             .Produces(StatusCodes.Status400BadRequest)
             .WithOpenApi(x => new OpenApiOperation(x)
             {
-                Summary = "Play a tennis match",
+                Summary = "Simulate a tennis match",
                 Description = "POST endpoint to simulate a tennis match for player and points history.",
                 Tags = new List<OpenApiTag> { new() { Name = "Rest API for match simulation" } }
             });

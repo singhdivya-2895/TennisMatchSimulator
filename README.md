@@ -14,6 +14,11 @@ This project is a .NET 7 application that simulates a Tennis Match. It leverages
 
 ## Architecture
 
+The project follows the multi layer pattern. In a real-world scenario, there will be an actual database also where the data will be saved by a persistence layer.
+
+![CQRS Pattern](./resources/architecture.png)
+
+
 ### Layers
 
 1. **API Layer**
