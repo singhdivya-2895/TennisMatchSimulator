@@ -11,6 +11,7 @@ This project is a .NET 7 application that simulates a Tennis Match. It leverages
 - FluentValidation
 - Exception Handling & Logging
 - Docker
+- xUnit and FluentAssertions
 
 ## Architecture
 
