@@ -106,6 +106,39 @@ The Console Application passes a list of players and points data to simulate a t
 I have already simulated a tennis match in Console Application.
 
 E.g.: Simulation for winner Player A
+
+    
+    # Input Data
+    Players: ["Player 1", "Player 2"]
+
+    Points: 
+    { 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, // Player 1 win 6-0
+        
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, // Player 1 win 6-0
+        
+        1, 1, 1, 1, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        1, 1, 1, 1, 
+        0, 0, 0, 0, 
+        1, 1, 1, 1, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0 // Player 1 win 6-3
+    }
+    
+
 ![Simulation for winner Player A](./resources/log.png)
 
 ### Unit Tests:
