@@ -107,3 +107,9 @@ I have already simulated a tennis match in Console Application.
 
 E.g.: Simulation for winner Player A
 ![Simulation for winner Player A](./resources/log.png)
+
+### Unit Tests:
+Proper unit tests are added for the domain and service layer, where all the business logic is written and executed.
+
+Unit Tests Coverage:
+![Unit Tests Coverage](./resources/coverage.png)
