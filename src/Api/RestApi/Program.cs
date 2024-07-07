@@ -6,7 +6,6 @@ using RestApi.Validator;
 using System.Diagnostics.CodeAnalysis;
 using TennisMatchService;
 using TennisMatchService.Logger;
-using FluentValidation;
 using FluentValidation.Results;
 
 namespace RestApi
