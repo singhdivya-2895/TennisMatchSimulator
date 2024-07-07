@@ -25,5 +25,9 @@ namespace TennisMatchService.Logger
         {
             LogMessage("----\n");
         }
+        public void LogError(string message)
+        {
+            _logger.LogError(message);
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace Service.Tests
             var manager = new TennisMatchManager(loggerMock.Object);
 
             string[] players = new string[] { "Player1", "Player2" };
-            int[] points = new int[0];
+            int[] points = Array.Empty<int>();
 
             // Act
             manager.PlayMatch(players, points);
@@ -71,6 +71,26 @@ namespace Service.Tests
             loggerMock.Verify(x => x.LogMessage("Final Match Winner: Player1"), Times.Never);
 
             loggerMock.Verify(x => x.LogMessage("No Result"), Times.Once);
+        }
+
+
+        [Fact]
+        public void PlayMatch_InvalidRequest_ErrorLogged()
+        {
+            // Arrange
+            var loggerMock = new Mock<IMatchLogger>();
+            var manager = new TennisMatchManager(loggerMock.Object);
+
+            string[] players = new string[] { "Player1" };
+            int[] points = Array.Empty<int>();
+
+            // Act
+            manager.PlayMatch(players, points);
+
+            // Assert
+            loggerMock.Verify(x => x.LogMessage(It.IsAny<string>()), Times.Never);
+
+            loggerMock.Verify(x => x.LogError(It.IsAny<string>()), Times.Once);
         }
     }
 }

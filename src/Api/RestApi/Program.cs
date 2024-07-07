@@ -1,9 +1,13 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using RestApi.DTO;
+using RestApi.Validator;
 using System.Diagnostics.CodeAnalysis;
 using TennisMatchService;
 using TennisMatchService.Logger;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace RestApi
 {
@@ -14,9 +18,6 @@ namespace RestApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddAuthorization();
-
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -24,6 +25,8 @@ namespace RestApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tennis Match Simulator", Version = "v1" });
             });
             builder.Services.AddSingleton<ITennisMatchService, TennisMatchService.TennisMatchManager>();
+            builder.Services.AddScoped<IValidator<TennisMatchDto>, TennisMatchDtoValidator>();
+            
             builder.Services.AddLogging(builder =>
             {
                 builder.AddSimpleConsole(options =>
@@ -45,16 +48,19 @@ namespace RestApi
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
-
-
-            app.MapPost("/playMatch", ([FromBody] TennisMatchDto matchDto, ITennisMatchService tennisMatchService) =>
+            app.MapPost("/api/playMatch", (ITennisMatchService tennisMatchService, [FromBody] TennisMatchDto matchDto, IValidator<TennisMatchDto> validator) =>
             {
+                ValidationResult validationResult = validator.Validate(matchDto);
+                if (!validationResult.IsValid)
+                {
+                    return Results.ValidationProblem(validationResult.ToDictionary());
+                }
                 tennisMatchService.PlayMatch(matchDto.Players, matchDto.Points);
-                return "Match Finished, Please check logs for match summary";
+                return Results.Ok("Match Finished, Please check logs for match summary");
             })
             .WithName("AddTeamToSport")
             .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithOpenApi(x => new OpenApiOperation(x)
             {
                 Summary = "Play a tennis match",

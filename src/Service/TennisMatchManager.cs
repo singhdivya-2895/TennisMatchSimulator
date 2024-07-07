@@ -13,28 +13,34 @@ namespace TennisMatchService
 
         public void PlayMatch(string[] players, int[] points)
         {
-            var player1 = new Player(players[0]);
-            var player2 = new Player(players[1]);
-            var match = new Match(player1, player2);
-            bool isMatchOver;
-            _logger.LogNewMatchStart(player1.Name, player2.Name);
-
-            foreach (var point in points)
+            try
             {
-                isMatchOver = match.RegisterPointWon(point);
-                _logger.LogMessage($"Point won by: {(point == 0 ? player1.Name : player2.Name)}");
-                _logger.LogMessage($"Current Game Score: {match.GetCurrentGameScore}");
-                _logger.LogMessage($"Current Set Score: {match.GetCurrentSetScore}");
-                _logger.LogMessage($"Current Match Score: {match.GetCurrentMatchScore}");
-                _logger.LogLineBreak();
+                var player1 = new Player(players[0]);
+                var player2 = new Player(players[1]);
+                var match = new Match(player1, player2);
+                bool isMatchOver;
+                _logger.LogNewMatchStart(player1.Name, player2.Name);
 
-                if (isMatchOver)
+                foreach (var point in points)
                 {
-                    _logger.LogMessage($"Final Match Winner: {match.GetMatchWinner.Name}");
-                    return;
+                    isMatchOver = match.RegisterPointWon(point);
+                    _logger.LogMessage($"Point won by: {(point == 0 ? player1.Name : player2.Name)}");
+                    _logger.LogMessage($"Current Game Score: {match.GetCurrentGameScore}");
+                    _logger.LogMessage($"Current Set Score: {match.GetCurrentSetScore}");
+                    _logger.LogMessage($"Current Match Score: {match.GetCurrentMatchScore}");
+                    _logger.LogLineBreak();
+
+                    if (isMatchOver)
+                    {
+                        _logger.LogMessage($"Final Match Winner: {match.GetMatchWinner.Name}");
+                        return;
+                    }
                 }
+                _logger.LogMessage($"No Result");
             }
-            _logger.LogMessage($"No Result");
+            catch (Exception ex) { 
+                _logger.LogError(ex.Message);
+            }
         }
     }
 }

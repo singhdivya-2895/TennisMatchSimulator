@@ -9,13 +9,13 @@
 
         public Player Player1 { get; }
         public Player Player2 { get; }
-        private bool _IsTiebreaker { get; set; }
+        private bool IsTiebreaker { get; set; }
 
         public Game(Player player1, Player player2, bool isTiebreaker = false)
         {
             Player1 = player1;
             Player2 = player2;
-            _IsTiebreaker = isTiebreaker;
+            IsTiebreaker = isTiebreaker;
         }
 
         public void PointWonBy(Player player)
@@ -33,12 +33,12 @@
         {
             Player1.ResetPoints();
             Player2.ResetPoints();
-            _IsTiebreaker = false;
+            IsTiebreaker = false;
         }
 
         private bool IsGameWon()
         {
-            if (_IsTiebreaker)
+            if (IsTiebreaker)
             {
                 return (Player1.Points >= 7 && Player1.Points >= Player2.Points + 2) ||
                        (Player2.Points >= 7 && Player2.Points >= Player1.Points + 2);
@@ -52,7 +52,7 @@
 
         public string GetScore()
         {
-            if (_IsTiebreaker)
+            if (IsTiebreaker)
             {
                 return $"(TieBreaker) {Player1.Points}-{Player2.Points}";
             }

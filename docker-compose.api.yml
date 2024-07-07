@@ -1,0 +1,11 @@
+version: "3.2"
+services:
+  tennismatchsimulator-api:
+    build:
+      context: .
+      dockerfile: src/Api/RestApi/Dockerfile
+    ports:
+      - 5000:80    
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
